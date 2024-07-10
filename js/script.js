@@ -1,12 +1,20 @@
 import { convertStringToNumber } from './convertStringToNumber.js';
 import { OverlayScrollbars } from './overlayscrollbars.esm.min.js';
+import { getReportData } from './getReportData.js';
+import { renderReport } from './renderReport.js';
+import { reportDatesFilter } from './reportDatesFilter.js';
 
 
+const finance = document.querySelector('.finance');
 const financeForm = document.querySelector('.finance__form');
 const financeAmount = document.querySelector('.finance__amount');
 const financeReportBtn = document.querySelector('.finance__report');
 const report = document.querySelector('.report');
+export const reportOperationList = document.querySelector('.report__operation-list');
+const reportDates = document.querySelector('.report__dates');
 let amount = 0;
+
+OverlayScrollbars(report, {});
 
 financeAmount.textContent = amount;
 
@@ -28,16 +36,38 @@ financeForm.addEventListener('submit', (event) => {
     financeAmount.textContent = `${amount.toLocaleString()} ₽`;
 });
 
-financeReportBtn.addEventListener('click', () => {
-    const report = document.querySelector('.report');
+const openReport = () => {
+    report.classList.add('report_open');
 
-    report.classList.add('report__open');
-});
+    setTimeout(() => {
+        report.classList.add('report_opacity');
+    }, 0);
 
-report.addEventListener('click', (event) => {
-    if (event.target.closest('.report__close')) {
-        report.classList.remove('report__open');
+    finance.addEventListener('click', closeReport);
+};
+
+const closeReport = (event) => {
+    if (event.target === finance || event.target.closest('.report__close')) {
+        report.classList.remove('report_opacity');
+
+        setTimeout(() => {
+            report.classList.remove('report_open');
+        }, 210);
+
+        finance.removeEventListener('click', closeReport);
     }
+};
+
+financeReportBtn.addEventListener('click', async () => {
+    reportOperationList.textContent = 'Загрузка...';
+    openReport();
+    const data = await getReportData('/test');
+    renderReport(data);
 });
 
-OverlayScrollbars(report, {});
+reportDates.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const data = await reportDatesFilter(reportDates);
+    renderReport(data);
+});
