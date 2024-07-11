@@ -37,32 +37,44 @@ financeForm.addEventListener('submit', (event) => {
 });
 
 const openReport = () => {
-    report.classList.add('report_open');
+    report.style.visibility = 'visible';
 
-    setTimeout(() => {
-        report.classList.add('report_opacity');
-    }, 0);
+    gsap.to(report, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.3,
+        easy: 'power2.out',
+    });
 
     finance.addEventListener('click', closeReport);
 };
 
 const closeReport = (event) => {
     if (event.target === finance || event.target.closest('.report__close')) {
-        report.classList.remove('report_opacity');
-
-        setTimeout(() => {
-            report.classList.remove('report_open');
-        }, 210);
+        gsap.to(report, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.3,
+            easy: 'power2.in',
+            onComplete() {
+                report.style.visibility = 'hidden';
+            }
+        });
 
         finance.removeEventListener('click', closeReport);
     }
 };
 
 financeReportBtn.addEventListener('click', async () => {
-    reportOperationList.textContent = 'Загрузка...';
-    openReport();
+    const btnText = financeReportBtn.textContent;
+
+    financeReportBtn.textContent = 'Загрузка';
+    financeReportBtn.disabled = true;
     const data = await getReportData('/test');
     renderReport(data);
+    openReport();
+    financeReportBtn.textContent = btnText;
+    financeReportBtn.disabled = false;
 });
 
 reportDates.addEventListener('submit', async (event) => {
