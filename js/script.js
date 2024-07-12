@@ -43,7 +43,7 @@ const openReport = () => {
         opacity: 1,
         scale: 1,
         duration: 0.3,
-        easy: 'power2.out',
+        ease: 'power2.out',
     });
 
     finance.addEventListener('click', closeReport);
@@ -55,7 +55,7 @@ const closeReport = (event) => {
             opacity: 0,
             scale: 0,
             duration: 0.3,
-            easy: 'power2.in',
+            ease: 'power2.in',
             onComplete() {
                 report.style.visibility = 'hidden';
             }
