@@ -1,5 +1,6 @@
 import { reportOperationList } from './script.js';
 import { reformatDate } from './reformatDate.js';
+import { convertStringToNumber } from './convertStringToNumber.js';
 
 
 const typesOperation = {
@@ -14,7 +15,7 @@ export const renderReport = (data) => {
 
         reportRow.innerHTML = `
             <td class="report__cell">${operation.category}</td>
-            <td class="report__cell report__cell_align">${operation.amount.toLocaleString()} ₽</td>
+            <td class="report__cell report__cell_align">${convertStringToNumber(operation.amount).toLocaleString()} ₽</td>
             <td class="report__cell">${operation.description}</td>
             <td class="report__cell">${reformatDate(operation.date)}</td>
             <td class="report__cell">${typesOperation[operation.type]}</td>

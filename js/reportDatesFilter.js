@@ -1,4 +1,4 @@
-import { getReportData } from './getReportData.js';
+import { getData } from './services.js';
 
 
 export const reportDatesFilter = async (form) => {
@@ -16,9 +16,9 @@ export const reportDatesFilter = async (form) => {
     }
 
     const queryString = searchParams.toString();
-    const url = queryString ? `/test?${queryString}` : '/test';
+    const url = queryString ? `/finance?${queryString}` : '/finance';
 
-    const data = await getReportData(url)
+    const data = await getData(url)
 
     return data;
 };
