@@ -21,7 +21,7 @@ export const renderReport = (data) => {
             <td class="report__cell">${typesOperation[operation.type]}</td>
             <td class="report__action-cell">
                 <button
-                    class="report__button report__button_table">&#10006;
+                    class="report__button report__button_table" data-operation-id=${operation.id}>&#10006;
                 </button>
             </td>
         `

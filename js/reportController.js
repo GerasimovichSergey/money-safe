@@ -1,10 +1,18 @@
-import { getData } from './services.js';
+import { deleteOperation, getData } from './services.js';
 import { renderReport } from './renderReport.js';
 import { reportDatesFilter } from './reportDatesFilter.js';
-import { finance, financeReportBtn, report, reportDates } from './script.js';
+import { finance, financeReportBtn, report, reportDates, reportOperationList } from './script.js';
 
 
 export const reportController = () => {
+    reportOperationList.addEventListener('click', async (event) => {
+        if (event.target.tagName === 'BUTTON') {
+            const operationId = event.target.dataset.operationId;
+            event.target.closest('.report__row').remove();
+            await deleteOperation('/finance', operationId);
+        }
+    });
+
     const openReport = () => {
         report.style.visibility = 'visible';
 

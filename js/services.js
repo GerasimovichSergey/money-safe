@@ -35,3 +35,20 @@ export const postData = async (url, data) => {
         throw error;
     }
 };
+
+export const deleteOperation = async (url, id) => {
+    try {
+        const response = await fetch(`${API_URL}${url}/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Ошибка при удалении операции', error);
+        throw error;
+    }
+};
