@@ -323,3 +323,16 @@ fieldset {
     height: 40%;
     width: 100%;
 }
+
+.message {
+    position: absolute;
+    opacity: 0;
+    top: -65px;
+    left: 50%;
+    max-width: 350px;
+    background-color: #17bda9;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    transform: translateX(-50%);
+}

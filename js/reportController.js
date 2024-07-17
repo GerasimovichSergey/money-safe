@@ -2,14 +2,37 @@ import { deleteOperation, getData } from './services.js';
 import { renderReport } from './renderReport.js';
 import { reportDatesFilter } from './reportDatesFilter.js';
 import { finance, financeReportBtn, report, reportDates, reportOperationList } from './script.js';
+import { createMessage } from './createMessage.js';
 
 
 export const reportController = () => {
+    const removeMessage = () => {
+        const message = document.querySelector('.message');
+
+        gsap.to(message, {
+            opacity: 0,
+            delay: 1.2,
+            duration: 1,
+            onComplete: () => message.remove(),
+        });
+    };
+
     reportOperationList.addEventListener('click', async (event) => {
         if (event.target.tagName === 'BUTTON') {
             const operationId = event.target.dataset.operationId;
             event.target.closest('.report__row').remove();
-            await deleteOperation('/finance', operationId);
+            const textMessage = await deleteOperation('/finance', operationId);
+            const message = createMessage(textMessage.message);
+
+            finance.append(message);
+
+            gsap.to(message, {
+                y: 115,
+                opacity: 1,
+                duration: 1,
+                ease: 'power4.out',
+                onComplete: removeMessage,
+            });
         }
     });
 
