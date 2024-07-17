@@ -1,20 +1,13 @@
 import { financeAmount, financeForm } from './script.js';
-import { getData, postData } from './services.js';
+import { postData } from './services.js';
 import { convertStringToNumber } from './convertStringToNumber.js';
+import { getTotalAmount } from './getTotalAmount.js';
 
-
-let amount = 0;
 
 export const financeController = async () => {
-    const operationsData = await getData('/finance');
+    let amount = 0;
 
-    amount = operationsData.reduce((acc, item) => {
-        if (item.type === 'income') {
-            return acc + convertStringToNumber(item.amount);
-        } else {
-            return acc - convertStringToNumber(item.amount);
-        }
-    }, 0);
+    amount = await getTotalAmount();
 
     financeAmount.textContent = `${amount.toLocaleString()} ₽`;
 

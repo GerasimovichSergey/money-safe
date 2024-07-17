@@ -1,8 +1,9 @@
 import { deleteOperation, getData } from './services.js';
 import { renderReport } from './renderReport.js';
 import { reportDatesFilter } from './reportDatesFilter.js';
-import { finance, financeReportBtn, report, reportDates, reportOperationList } from './script.js';
+import { finance, financeAmount, financeReportBtn, report, reportDates, reportOperationList } from './script.js';
 import { createMessage } from './createMessage.js';
+import { getTotalAmount } from './getTotalAmount.js';
 
 
 export const reportController = () => {
@@ -33,6 +34,9 @@ export const reportController = () => {
                 ease: 'power4.out',
                 onComplete: removeMessage,
             });
+
+            const amount = await getTotalAmount();
+            financeAmount.textContent = `${amount.toLocaleString()} ₽`;
         }
     });
 
