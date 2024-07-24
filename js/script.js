@@ -10,6 +10,7 @@ export const financeReportBtn = document.querySelector('.finance__report');
 export const report = document.querySelector('.report');
 export const reportOperationList = document.querySelector('.report__operation-list');
 export const reportDates = document.querySelector('.report__dates');
+export const categoryList = document.querySelector('#categoryList');
 
 OverlayScrollbars(report, {});
 

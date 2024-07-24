@@ -19,7 +19,7 @@ export const reportController = () => {
     };
 
     reportOperationList.addEventListener('click', async (event) => {
-        if (event.target.tagName === 'BUTTON') {
+        if (event.target.dataset.operationId) {
             const operationId = event.target.dataset.operationId;
             event.target.closest('.report__row').remove();
             const textMessage = await deleteOperation('/finance', operationId);
@@ -30,7 +30,7 @@ export const reportController = () => {
             gsap.to(message, {
                 y: 115,
                 opacity: 1,
-                duration: 1,
+                duration: 0.7,
                 ease: 'power4.out',
                 onComplete: removeMessage,
             });

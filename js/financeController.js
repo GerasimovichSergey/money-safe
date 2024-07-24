@@ -1,7 +1,9 @@
-import { financeAmount, financeForm } from './script.js';
+import { categoryList, financeAmount, financeForm } from './script.js';
 import { postData } from './services.js';
 import { convertStringToNumber } from './convertStringToNumber.js';
 import { getTotalAmount } from './getTotalAmount.js';
+import { createCategoryList } from './createCategoryList.js';
+import { animationNumber } from './animationNumber.js';
 
 
 export const financeController = async () => {
@@ -31,7 +33,11 @@ export const financeController = async () => {
             amount -= changeAmount;
         }
 
-        financeAmount.textContent = `${amount.toLocaleString()} ₽`;
+        animationNumber(financeAmount, amount);
         financeForm.reset();
     });
+
+    const categoryListOptions = await createCategoryList();
+
+    categoryList.append(...categoryListOptions);
 };
