@@ -1,6 +1,7 @@
 import { OverlayScrollbars } from './libs/overlayscrollbars.esm.min.js';
 import { reportController } from './reportController.js';
 import { financeController } from './financeController.js';
+import { createCategoryList } from './createCategoryList.js';
 
 
 export const finance = document.querySelector('.finance');
@@ -17,6 +18,7 @@ OverlayScrollbars(report, {});
 const init = () => {
     reportController();
     financeController();
+    createCategoryList();
 };
 
 init();

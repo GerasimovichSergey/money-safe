@@ -1,10 +1,21 @@
 import { deleteOperation, getData } from './services.js';
 import { renderReport } from './renderReport.js';
 import { reportDatesFilter } from './reportDatesFilter.js';
-import { finance, financeAmount, financeReportBtn, report, reportDates, reportOperationList } from './script.js';
+import {
+    finance,
+    financeAmount,
+    financeReportBtn,
+    report,
+    reportDates,
+    reportOperationList
+} from './script.js';
 import { createMessage } from './createMessage.js';
 import { getTotalAmount } from './getTotalAmount.js';
+import { clearChart, generateChart } from './generateChart.js';
 
+
+const generateChartButton = document.querySelector('#generateChartButton');
+let actualData = [];
 
 export const reportController = () => {
     const removeMessage = () => {
@@ -21,8 +32,12 @@ export const reportController = () => {
     reportOperationList.addEventListener('click', async (event) => {
         if (event.target.dataset.operationId) {
             const operationId = event.target.dataset.operationId;
-            event.target.closest('.report__row').remove();
             const textMessage = await deleteOperation('/finance', operationId);
+            const reportRow = event.target.closest('.report__row');
+
+            reportRow.remove();
+            clearChart();
+
             const message = createMessage(textMessage.message);
 
             finance.append(message);
@@ -73,20 +88,28 @@ export const reportController = () => {
         const btnText = financeReportBtn.textContent;
 
         financeReportBtn.textContent = 'Загрузка';
+        financeReportBtn.style.cursor = 'no-drop';
         financeReportBtn.disabled = true;
 
-        const data = await getData('/finance');
-        renderReport(data);
+        actualData = await getData('/finance');
+        renderReport(actualData);
         openReport();
 
         financeReportBtn.textContent = btnText;
+        financeReportBtn.style.cursor = '';
         financeReportBtn.disabled = false;
     });
 
     reportDates.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const data = await reportDatesFilter(reportDates);
-        renderReport(data);
+        actualData = await reportDatesFilter(reportDates);
+        renderReport(actualData);
+
+        clearChart();
     });
 };
+
+generateChartButton.addEventListener('click', () => {
+    generateChart(actualData);
+});

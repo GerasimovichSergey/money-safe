@@ -1,8 +1,7 @@
-import { categoryList, financeAmount, financeForm } from './script.js';
+import { financeAmount, financeForm } from './script.js';
 import { postData } from './services.js';
 import { convertStringToNumber } from './convertStringToNumber.js';
 import { getTotalAmount } from './getTotalAmount.js';
-import { createCategoryList } from './createCategoryList.js';
 import { animationNumber } from './animationNumber.js';
 
 
@@ -36,8 +35,4 @@ export const financeController = async () => {
         animationNumber(financeAmount, amount);
         financeForm.reset();
     });
-
-    const categoryListOptions = await createCategoryList();
-
-    categoryList.append(...categoryListOptions);
 };

@@ -3,7 +3,6 @@ import { categoryList } from './script.js';
 
 
 export const createCategoryList = async () => {
-
     categoryList.textContent = '';
 
     const getCategoryList = await getData('/categories');
@@ -16,5 +15,5 @@ export const createCategoryList = async () => {
         return option;
     });
 
-    return createCategories;
+    categoryList.append(...createCategories);
 }

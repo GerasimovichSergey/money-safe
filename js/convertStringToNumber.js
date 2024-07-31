@@ -1,5 +1,5 @@
 export const convertStringToNumber = (str) => {
-    const noSpaceStr = str.replace(/\s+/g, '');
+    const noSpaceStr = String(str).replace(/\s+/g, '');
     const num = parseInt(noSpaceStr);
 
     if (!isNaN(num) && isFinite(num)) {
